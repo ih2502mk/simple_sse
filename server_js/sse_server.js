@@ -1,14 +1,12 @@
-var http              = require('http'),
-    express           = require('express'),
-    sse               = require('sse'),
-    app               = express(),
-    port              = process.argv[2] ? process.argv[2] : 8080,
-    docRoot           = './public',
-    clients           = [];
-    
+var http = require('http');
+var express = require('express');
+var sse = require('sse');
+var app = express();
+var port = process.argv[2] ? process.argv[2] : 8080;
+var docRoot = './public';
+var clients = [];
 
-app.configure(function() {
-  app.use(express.static(docRoot));
+app.configure(function() {  
   app.use(express.urlencoded());
 });
 

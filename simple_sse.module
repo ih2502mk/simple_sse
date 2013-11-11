@@ -1,10 +1,38 @@
 <?php
 
 /**
+ * @file
+ * Simple SSE module
+ */
+
+/**
+ * Implements hook_page_alter().
+ */
+function simple_sse_page_alter(&$page) {
+  $page['content']['#attached']['js'][] = array(
+    'data' => array('simple_sse' => array('simpleSSEUrl' => drupal_get_path('module', 'simple_sse') . '/sse.php')),
+    'type' => 'setting',
+  );
+  $page['content']['#attached']['js'][drupal_get_path('module', 'simple_sse') . '/client_js/sse_client.js'] = array('type' => 'file');
+  
+  dpm($page);
+}
+
+/**
  * Implements hook_entity_insert().
  */
 function simple_sse_entity_insert($entity, $type) {
+  $info = entity_get_info($type);
   
+  $idKey = $info['entity keys']['id'];
+
+  $update = array(
+    'op' => 'update',
+    'type' => $type,
+    'id' => $entity->{$idKey},
+  );
+    
+  _simple_sse_send_update($update);
 }
 
 /**
@@ -16,6 +44,7 @@ function simple_sse_entity_update($entity, $type) {
   $idKey = $info['entity keys']['id'];
 
   $update = array(
+    'op' => 'update',
     'type' => $type,
     'id' => $entity->{$idKey},
   );
