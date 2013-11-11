@@ -1,0 +1,37 @@
+<?php
+
+/**
+ * Implements hook_entity_insert().
+ */
+function simple_sse_entity_insert($entity, $type) {
+  
+}
+
+/**
+ * Implements hook_entity_insert().
+ */
+function simple_sse_entity_update($entity, $type) {
+  $info = entity_get_info($type);
+  
+  $idKey = $info['entity keys']['id'];
+
+  $update = array(
+    'type' => $type,
+    'id' => $entity->{$idKey},
+  );
+    
+  _simple_sse_send_update($update);
+}
+
+/**
+ * Sends an update to SSE server
+ */
+function _simple_sse_send_update($update) {
+   $resp = drupal_http_request('http://localhost:8080/update', array(
+     'method' => 'POST',
+     'data' => drupal_http_build_query($update),
+     'headers' => array(
+       'Content-Type' => 'application/x-www-form-urlencoded'
+     )
+   ));
+}

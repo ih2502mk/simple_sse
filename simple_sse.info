@@ -1,0 +1,4 @@
+name = Simple Server Sent Events
+description = Intergrates drupal with small Node server used for Sending SSE
+core = 7.x
+
