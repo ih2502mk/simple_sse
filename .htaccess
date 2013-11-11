@@ -1,7 +1,5 @@
 Options -Indexes
 
 RewriteEngine On
-# TODO: parametrize url of sse server since in rewrite conditions you can get 
-# all sorst of values we can send url of sse server and it's pot as for instance get params
-#RewriteRule ^sse\.php$ http://localhost:8080/sse [L,P]
+# TODO: parametrize url of sse server: url, port, endpoint can be get parameters of url being rewritten
 RewriteRule ^sse\.php$ http://localhost:8080/sse [L,P]
